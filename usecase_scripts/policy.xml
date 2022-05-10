@@ -1,0 +1,26 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"  PolicyId="2" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable" Version="1.0">
+   <Description>Prize policy</Description>
+   <Target></Target>
+   <Rule Effect="Permit" RuleId="prize">
+      <Target>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">bachelor student</AttributeValue>
+                  <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:3.0:subject:subjectRole" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" Issuer="0xd9145CCE52D386f254917e481eB44e9943F39138" MustBePresent="true"></AttributeDesignator>
+               </Match>
+            </AllOf>
+         </AnyOf>
+      </Target>
+      <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+         <Apply FunctionId="urn:it:uniPisa:verifiers:GreaterOrEqualThanVerifier:0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">27</AttributeValue>
+         <AttributeDesignator AttributeId="gradeAverage" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#integer" Issuer="0xd9145CCE52D386f254917e481eB44e9943F39138" MustBePresent="true" Private="true"></AttributeDesignator>
+         </Apply>
+         <Apply FunctionId="urn:it:uniPisa:verifiers:NeltenygVerifier:0xf8e81D47203A594245E36C48e151709F0C19fBe8">
+         <AttributeDesignator AttributeId="enrollmentYear" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#integer" Issuer="0xd9145CCE52D386f254917e481eB44e9943F39138" MustBePresent="true" Private="true"></AttributeDesignator>
+         </Apply>
+      </Condition>   
+   </Rule>
+   <Rule Effect="deny" RuleId="denyRule"></Rule>  
+</Policy> 

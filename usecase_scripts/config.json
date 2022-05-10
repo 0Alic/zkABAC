@@ -1,0 +1,7 @@
+{
+    "mnemonic": "family dress industry stage bike shrimp replace design author amateur reopen script",
+    "localhost": "http://localhost",
+    "port": "8545",
+    "chainId": "1337",
+    "registryPath": "./node_modules/ethr-did-registry/build/contracts/EthereumDIDRegistry.json"
+}

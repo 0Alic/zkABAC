@@ -1,0 +1,20 @@
+// Example from https://zokrates.github.io/gettingstarted.html
+// https://www.developer.tech.gov.sg/communities/stack-x-meetups/past-webinars/zero-knowledge-proof-part-2
+// https://zokrates.github.io/examples/sha256example.html
+
+import "hashes/sha256/512bitPacked" as sha256packed
+
+def main(private field val, private field salt, field hash1, field hash2) -> (bool):
+    /*
+    sha256packed is a SHA256 implementation that is optimized for the use in the ZoKrates DSL.
+    Here is how it works: We want to pass 512 bits of input to SHA256. However, a field value can only hold 254 bits
+    due to the size of the underlying prime field we are using.
+    As a consequence, we use four field elements, each one encoding 128 bits,
+    to represent our input. The four elements are then concatenated in ZoKrates and passed to SHA256.
+    Given that the resulting hash is 256 bit long, we split it in two and return each value as a 128 bit number.
+    */
+    assert(val <= 3)
+    field[2] h = sha256packed([0, 0, val, salt])
+    assert(hash1 == h[0])
+    assert(hash2 == h[1])
+    return true

@@ -1,0 +1,13 @@
+import "hashes/sha256/512bitPacked" as sha256packed
+
+    def main(private field[10] b, private field salt, field[10] h1, field[10] h2, field target) -> (bool):
+
+        for u32 i in 0..10 do
+            assert(b[i] >= target)
+            field[2] h = sha256packed([0, 0, b[i], salt])
+            assert(h1[i] == h[0])
+            assert(h2[i] == h[1])
+        endfor
+
+        return true
+    

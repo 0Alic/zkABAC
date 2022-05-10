@@ -1,0 +1,11 @@
+// This is an helper file used to generate zokrates compatible hash values to be used from proofs
+// The function returns the sha256 from 4 inputs concatenating them in order
+// Usage zokrates compute-witness -a a b c d
+// I.e. to compute the sha256 of 5 call zokrates compute-witness -a 0 0 0 5
+// https://zokrates.github.io/examples/sha256example.html
+
+import "hashes/sha256/512bitPacked" as sha256packed
+
+def main(private field a, private field b, private field c, private field d) -> field[2]:
+    field[2] h = sha256packed([a, b, c, d])
+    return h
