@@ -51,8 +51,8 @@ module.exports = async function(callback) {
 
         await AM.modifyMetadataOf(subject, metadataKey, inputs)
 
-        const smart_policy = await policyArtifact.new(verifier.address, {from: resource_owner, gas: gas_limit})
-        const gas = await policyArtifact.new.estimateGas(verifier.address, {from: resource_owner, gas: gas_limit})
+        const smart_policy = await policyArtifact.new({from: resource_owner, gas: gas_limit})
+        const gas = await policyArtifact.new.estimateGas({from: resource_owner, gas: gas_limit})
         const tx = await smart_policy.evaluate(subject, [json.proof.a, json.proof.b, json.proof.c], {gas: gas_limit})    
 
         console.log("\tDeployment cost Policy: " + gas)

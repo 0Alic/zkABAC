@@ -19,7 +19,7 @@ contract XACMLSmartPolicyModular10Verifiers {
     /////////////
     function evaluateTarget_studentRole(address _subject) public view returns (bool) {
 
-        string memory _role = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getPublicAttributeOf(_subject, "uniStudent");
+        string memory _role = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getPublicAttributeOf(_subject, "uniStudent");
 
         if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked("bachelor student")))
             return true;
@@ -33,12 +33,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade0(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -46,12 +46,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade1(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -59,12 +59,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade2(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -72,12 +72,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade3(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -85,12 +85,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade4(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -98,12 +98,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade5(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -111,12 +111,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade6(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -124,12 +124,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade7(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -137,12 +137,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade8(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
@@ -150,12 +150,12 @@ contract XACMLSmartPolicyModular10Verifiers {
     
     function evaluateCondition_avgGrade9(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "gradeAverage");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "gradeAverage");
 
         if(_inputs.length != 2)
             return false;
 
-        if(GreaterOrEqualThanVerifier(0x6a38BfDEd33EfA5Ef4dc5c4a600A58e2B530781E).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(GreaterOrEqualThanVerifier(0x7d3b67da2913A317c13D3274C57f54bedEE84E47).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;

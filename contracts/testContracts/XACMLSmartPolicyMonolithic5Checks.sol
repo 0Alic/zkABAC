@@ -10,12 +10,10 @@ contract XACMLSmartPolicyMonolithic5Checks {
     enum RuleEvaluation { DENY, PERMIT, NOTAPPLICABLE, INDETERMINATE }
 
     address public owner;
-    Verifier5 verifier;
 
-    constructor(Verifier5 _verifier) {
+    constructor() {
 
         owner = msg.sender;
-        verifier = _verifier;
     }    
 
     /////////////
@@ -23,7 +21,7 @@ contract XACMLSmartPolicyMonolithic5Checks {
     /////////////
     function evaluateTarget_studentRole(address _subject) public view returns (bool) {
 
-        string memory _role = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getPublicAttributeOf(_subject, "uniStudent");
+        string memory _role = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getPublicAttributeOf(_subject, "uniStudent");
 
         if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked("bachelor student")))
             return true;
@@ -37,12 +35,12 @@ contract XACMLSmartPolicyMonolithic5Checks {
     ////////////////
     function evaluateCondition(address _subject, Verifier5.Proof memory _proof) public view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "Verifier5");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "Verifier5");
 
         if(_inputs.length != 10)
             return false;
 
-        if(verifier.verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], 27, 1]))
+        if(Verifier5(0x44B499ce475147B6B08CDE11298052Cb7e7F0Ebc).verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], 27, 1]))
             return true;
         else
             return false;

@@ -5,9 +5,10 @@ const fs = require('fs')
 // argv[0] = node
 // argv[1] = path
 const size = process.argv[2]
-const amAddress = process.argv[3]
+const verifierAddress = process.argv[3]
 const thresholdGrade = process.argv[4]
-const targetRole = process.argv[5]
+const amAddress = process.argv[5]
+const targetRole = process.argv[6]
 
 
 const contractName = `XACMLSmartPolicyMonolithic${size}Checks`
@@ -31,12 +32,10 @@ contract ${contractName} {
     enum RuleEvaluation { DENY, PERMIT, NOTAPPLICABLE, INDETERMINATE }
 
     address public owner;
-    ${verifierType} verifier;
 
-    constructor(${verifierType} _verifier) {
+    constructor() {
 
         owner = msg.sender;
-        verifier = _verifier;
     }    
 
     /////////////
@@ -63,7 +62,7 @@ contract ${contractName} {
         if(_inputs.length != ${size*2})
             return false;
 
-        if(verifier.verifyTx(_proof, ${inputs}))
+        if(${verifierType}(${verifierAddress}).verifyTx(_proof, ${inputs}))
             return true;
         else
             return false;

@@ -38,7 +38,9 @@ module.exports = async function (deployer, network, accounts) {
     for(let i of sizes) {
       modular_script += `node policy_generatorModular.js ${i} ${verifier.address} ${27} ${am.address} '${targetRole}'
       `
-      monolithic_script += `node policy_generatorMonolithic.js ${i} ${am.address} ${27} '${targetRole}'
+      const mono_verifier_TEMPLATE = artifacts.require(`Verifier${i}`)
+      const mono_verifier = await deployer.deploy(mono_verifier_TEMPLATE)
+      monolithic_script += `node policy_generatorMonolithic.js ${i} ${mono_verifier.address} ${27} ${am.address}  '${targetRole}'
       `
     }
 

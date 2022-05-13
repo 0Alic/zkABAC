@@ -10,12 +10,10 @@ contract XACMLSmartPolicyMonolithic15Checks {
     enum RuleEvaluation { DENY, PERMIT, NOTAPPLICABLE, INDETERMINATE }
 
     address public owner;
-    Verifier15 verifier;
 
-    constructor(Verifier15 _verifier) {
+    constructor() {
 
         owner = msg.sender;
-        verifier = _verifier;
     }    
 
     /////////////
@@ -23,7 +21,7 @@ contract XACMLSmartPolicyMonolithic15Checks {
     /////////////
     function evaluateTarget_studentRole(address _subject) public view returns (bool) {
 
-        string memory _role = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getPublicAttributeOf(_subject, "uniStudent");
+        string memory _role = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getPublicAttributeOf(_subject, "uniStudent");
 
         if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked("bachelor student")))
             return true;
@@ -37,12 +35,12 @@ contract XACMLSmartPolicyMonolithic15Checks {
     ////////////////
     function evaluateCondition(address _subject, Verifier15.Proof memory _proof) public view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "Verifier15");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "Verifier15");
 
         if(_inputs.length != 30)
             return false;
 
-        if(verifier.verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], _inputs[10], _inputs[11], _inputs[12], _inputs[13], _inputs[14], _inputs[15], _inputs[16], _inputs[17], _inputs[18], _inputs[19], _inputs[20], _inputs[21], _inputs[22], _inputs[23], _inputs[24], _inputs[25], _inputs[26], _inputs[27], _inputs[28], _inputs[29], 27, 1]))
+        if(Verifier15(0xF67e05eb816156C4Bf54ef2DCC4e0a0D2675A380).verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], _inputs[10], _inputs[11], _inputs[12], _inputs[13], _inputs[14], _inputs[15], _inputs[16], _inputs[17], _inputs[18], _inputs[19], _inputs[20], _inputs[21], _inputs[22], _inputs[23], _inputs[24], _inputs[25], _inputs[26], _inputs[27], _inputs[28], _inputs[29], 27, 1]))
             return true;
         else
             return false;

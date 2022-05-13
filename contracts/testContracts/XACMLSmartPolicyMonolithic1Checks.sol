@@ -10,12 +10,10 @@ contract XACMLSmartPolicyMonolithic1Checks {
     enum RuleEvaluation { DENY, PERMIT, NOTAPPLICABLE, INDETERMINATE }
 
     address public owner;
-    Verifier1 verifier;
 
-    constructor(Verifier1 _verifier) {
+    constructor() {
 
         owner = msg.sender;
-        verifier = _verifier;
     }    
 
     /////////////
@@ -23,7 +21,7 @@ contract XACMLSmartPolicyMonolithic1Checks {
     /////////////
     function evaluateTarget_studentRole(address _subject) public view returns (bool) {
 
-        string memory _role = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getPublicAttributeOf(_subject, "uniStudent");
+        string memory _role = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getPublicAttributeOf(_subject, "uniStudent");
 
         if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked("bachelor student")))
             return true;
@@ -37,12 +35,12 @@ contract XACMLSmartPolicyMonolithic1Checks {
     ////////////////
     function evaluateCondition(address _subject, Verifier1.Proof memory _proof) public view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x1dd0B5b3E207C7fB0A8dE897E89c1f85E487c5E0).getMetadataOf(_subject, "Verifier1");
+        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "Verifier1");
 
         if(_inputs.length != 2)
             return false;
 
-        if(verifier.verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
+        if(Verifier1(0x0093436772b7A834d3be5B7e4ce3D18e3ed6038f).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;
