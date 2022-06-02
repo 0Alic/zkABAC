@@ -1,39 +1,61 @@
 # zk-ABAC
 
-This repository contains the codebase to implement the zk-ABAC.
+This repository contains the codebase to implement a zero-knowledge attribute based access control (zk-ABAC).
 
 ## Abstract
 
-...
+TODO
 
 ## How to use the repository
 
 The repository contains the Solidity smart contracts and the test files in javascript following the structure of Truffle project.
 
-### Requirements
+**This repository supports a scientific paper currently in peer review.** Most of the information will be on the paper once it is published.
 
-- Truffle, to compile and deploy the contracts: [link](ww.com)
-- ZoKrates, to generate zkSNARKs proofs and deploy verifier smart contracts: [link](ww.com)
+## Requirements
+
+- Truffle, to compile and deploy the contracts: [link](https://trufflesuite.com/)
+- ZoKrates, to generate zkSNARKs proofs and deploy verifier smart contracts: [link](https://zokrates.github.io/)
 - The NodeJs modules in the package.json
 
-### Contracts
+## Contracts
 
-The **contracts** folder contains into ZoKrates verifiers adapted to be imported together (for example, removing the Pairing structure and change the name to avoid re-definition compilation errors) and the zk-ABAC contracts divided into two folders:
-- ---nome---: a first version that does not support the revocation of a credential;
-- ---nome---: a second version that supports the revocation of a credential.
+The **contracts** folder contains into ZoKrates verifiers adapted to be imported together (for example, removing the Pairing structure and change the name to avoid re-definition compilation errors) and the zk-ABAC contracts. The contracts implement a reference example. The **test** folder hosts the smart contract used for the stress test.
 
 ### Testing the contracts 
 
-The tests utilize a private key to sign a message. You can change the private key in the testing code, or initiate ganache with this seedphrase
+**Reference example testing**
 
-    ganache  -m "family dress industry stage bike shrimp replace design author amateur reopen script" -l 100000000
+To execute the tests you need to run ganache with an high block gas limit, e.g.: 
 
-Execute the command
+    ganache -l 100000000
 
-    truffle test path/to/testfile.js --network localtest
+Assuming you have defined a Truffle network called "localtest" in truffle-config.js, you can execute the tests of the reference example with: 
 
-You can find "localtest" in truffle-config.js.
+    truffle test --network localtest
 
-### Execute the simulation script 
+These tests are used to check if the smart contracts work as intended.
 
-... with did-jwt
+The folder **usecase_scripts** contains the script to integrate the verifiable crendentials with the smart contracts. Install the dependencies with
+
+    cd usecase_scripts
+    npm install
+
+and execute the **main.js** script with
+
+    node main.js
+
+(remember to have ganache up and running). If the end the verification of the proof returns TRUE, everything worked well.
+
+The **ptp.js** is an example of policy translation point of the XACML policy in the same folder.
+
+**Stress testing**
+
+The stress testing is done by checking "how far the system goes". The contracts used are in the **contracts/test** folder and they are generated as follows:
+
+    truffle migrate --network localtest --reset
+    truffle compile
+    truffle exec test_scripts/exec_testModular --network localtest
+    truffle exec test_scripts/exec_testMonolithic --network localtest
+
+The migration script calls the js smart policy generators in **test_scripts** to generate smart policies. The ZoKrates verifiers are already generated because they require a lot of time and storage for complex ZoKrates programs (they are in **contracts/test**). The proofs used are in the **zok** folder. Be careful to use those proofs because using other proofs won't work with the verifiers in this repository (due to the zkSNARK setup).

@@ -15,14 +15,9 @@ contract XACMLSmartPolicy {
     GreaterOrEqualThanVerifier public gradeAvg_verifier;        // Verificatore generale, >= decontestualizzato
     NeltenygVerifier public enrollment_verifier;              // Verificatore dedicato all'anno di iscrizione
 
-    uint8 public targetGrade;
-    string public targetRole;
-
     constructor(AMContract _AMcontract,
                 GreaterOrEqualThanVerifier _gradeAvg_verifier,
-                NeltenygVerifier _enrollment_verifier,
-                uint8 _targetGrade,
-                string memory _targetRole) {
+                NeltenygVerifier _enrollment_verifier) {
 
         require(address(_AMcontract) != address(0) && address(_gradeAvg_verifier) != address(0) &&
                 address(_enrollment_verifier) != address(0), "Input address cannot be 0x0");
@@ -32,9 +27,6 @@ contract XACMLSmartPolicy {
         gradeAvg_verifier = _gradeAvg_verifier;
         enrollment_verifier = _enrollment_verifier;
         AM = _AMcontract;
-
-        targetGrade = _targetGrade;
-        targetRole = _targetRole;
     }
 
     /////////////
@@ -45,7 +37,7 @@ contract XACMLSmartPolicy {
         string memory _role = AM.getPublicAttributeOf(_subject, "uniStudent");
 
         // Utilizzare keccak permette di salvare tutti gli attributi pubblici come bytes32, sennò è complicato definire tutti i tipi
-        if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked(targetRole)))
+        if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked("bachelor student")))
             return true;
         else
             return false;
@@ -63,7 +55,7 @@ contract XACMLSmartPolicy {
             return false;
 
         // l'"1" in fondo all'array è per ZoKrates
-        if(gradeAvg_verifier.verifyTx(_proof, [_inputs[0], _inputs[1], targetGrade, 1]))
+        if(gradeAvg_verifier.verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
             return true;
         else
             return false;

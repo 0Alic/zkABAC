@@ -10,7 +10,7 @@ const readline = require('readline')
 
 process.argv.splice(0, 2)
 
-let provingKeySize = ``
+let provingKeySize = `num,provingkey,out\n`
 
 for(let arg in process.argv) {
 
@@ -118,7 +118,8 @@ for(let arg in process.argv) {
 
     // Store proving key size
     const key = fs.statSync("proving.key")
-    provingKeySize +=  `${size},${key.size}\n`
+    const out = fs.statSync("out")
+    provingKeySize +=  `${size},${key.size},${out.size}\n`
 
     // Rename files and cleanup
     console.log("*** zkABAC script: Cleanup zokrates files ***")

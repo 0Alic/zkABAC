@@ -124,7 +124,7 @@ contract("SmartPolicy", function(accounts) {
     const roleStr = "uniStudent"
 
     const targetGrade = 27
-    const targetRole = web3.eth.abi.encodeParameter("string", "bachelor student")
+    const targetRole = "bachelor student"
 
     describe("Constructor", function() {
 
@@ -140,29 +140,25 @@ contract("SmartPolicy", function(accounts) {
             let g = smart_policy = await XACMLSmartPolicy.new.estimateGas(AM.address,
                 greatOrEqual_verifier.address,
                 enrollmentYear_verifier.address,
-                targetGrade, targetRole, {from: resource_owner})
+                {from: resource_owner})
 
             console.log("Smart policy gas: " + g)
 
             smart_policy = await XACMLSmartPolicy.new(AM.address,
                 greatOrEqual_verifier.address,
                 enrollmentYear_verifier.address,
-                targetGrade, targetRole, {from: resource_owner})
+                {from: resource_owner})
 
             const owner = await smart_policy.owner()
             const gradeV = await smart_policy.gradeAvg_verifier()
             const yearV = await smart_policy.enrollment_verifier()
             const am = await smart_policy.AM()
-            const grade = await smart_policy.targetGrade()
-            const role = await smart_policy.targetRole()
             
 
             assert.equal(owner, resource_owner, `owner should be ${resource_owner}`)
             assert.equal(gradeV, greatOrEqual_verifier.address, `gradeAvg verifier address should be ${greatOrEqual_verifier.address}`)
             assert.equal(yearV, enrollmentYear_verifier.address, `year verifier address should be ${enrollmentYear_verifier.address}`)
             assert.equal(am, AM.address, `AM address should be ${AM.address}`)
-            assert.equal(grade, targetGrade, `target grade should be ${targetGrade}`)
-            assert.equal(role, targetRole, `target role should be ${targetRole}`)
         })
     })
 
@@ -206,7 +202,9 @@ contract("SmartPolicy", function(accounts) {
             smart_policy = await XACMLSmartPolicy.new(AM.address,
                 greatOrEqual_verifier.address,
                 enrollmentYear_verifier.address,
-                targetGrade, targetRole, {from: resource_owner})
+                // targetGrade,
+                // targetRole, 
+                {from: resource_owner})
 
         })
 
@@ -215,7 +213,7 @@ contract("SmartPolicy", function(accounts) {
             await AM.modifyMetadataOf(subject, avgGradeStr, [gradeh1, gradeh2], {from: attribute_manager})
             await AM.modifyMetadataOf(subject, yearStr, [yearh1, yearh2], {from: attribute_manager})
 
-            await AM.modifyPublicAttributeOf(subject, roleStr, targetRole, {from: attribute_manager})
+            const tx = await AM.modifyPublicAttributeOf(subject, roleStr, targetRole, {from: attribute_manager})
 
             const ret = await smart_policy.evaluate(subject, [avgGradeProof.proof.a, avgGradeProof.proof.b, avgGradeProof.proof.c],
                                                             [yearProof.proof.a, yearProof.proof.b, yearProof.proof.c])

@@ -21,7 +21,7 @@ contract XACMLSmartPolicyMonolithic40Checks {
     /////////////
     function evaluateTarget_studentRole(address _subject) public view returns (bool) {
 
-        string memory _role = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getPublicAttributeOf(_subject, "uniStudent");
+        string memory _role = AMContract(0x45ce12837e04e7c0FA10a873A8654946a63bB377).getPublicAttributeOf(_subject, "uniStudent");
 
         if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked("bachelor student")))
             return true;
@@ -35,12 +35,12 @@ contract XACMLSmartPolicyMonolithic40Checks {
     ////////////////
     function evaluateCondition(address _subject, Verifier40.Proof memory _proof) public view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0xC8c45aA0fA6203d60b4382a90B60B5644eD7F5B7).getMetadataOf(_subject, "Verifier40");
+        uint[] memory _inputs = AMContract(0x45ce12837e04e7c0FA10a873A8654946a63bB377).getMetadataOf(_subject, "Verifier40");
 
         if(_inputs.length != 80)
             return false;
 
-        if(Verifier40(0x804f938D482f9240E9887348796FcF3668410963).verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], _inputs[10], _inputs[11], _inputs[12], _inputs[13], _inputs[14], _inputs[15], _inputs[16], _inputs[17], _inputs[18], _inputs[19], _inputs[20], _inputs[21], _inputs[22], _inputs[23], _inputs[24], _inputs[25], _inputs[26], _inputs[27], _inputs[28], _inputs[29], _inputs[30], _inputs[31], _inputs[32], _inputs[33], _inputs[34], _inputs[35], _inputs[36], _inputs[37], _inputs[38], _inputs[39], _inputs[40], _inputs[41], _inputs[42], _inputs[43], _inputs[44], _inputs[45], _inputs[46], _inputs[47], _inputs[48], _inputs[49], _inputs[50], _inputs[51], _inputs[52], _inputs[53], _inputs[54], _inputs[55], _inputs[56], _inputs[57], _inputs[58], _inputs[59], _inputs[60], _inputs[61], _inputs[62], _inputs[63], _inputs[64], _inputs[65], _inputs[66], _inputs[67], _inputs[68], _inputs[69], _inputs[70], _inputs[71], _inputs[72], _inputs[73], _inputs[74], _inputs[75], _inputs[76], _inputs[77], _inputs[78], _inputs[79], 27, 1]))
+        if(Verifier40(0x1B4E124b3E7670fCD187Bf9DAa62233C19F2B19C).verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], _inputs[10], _inputs[11], _inputs[12], _inputs[13], _inputs[14], _inputs[15], _inputs[16], _inputs[17], _inputs[18], _inputs[19], _inputs[20], _inputs[21], _inputs[22], _inputs[23], _inputs[24], _inputs[25], _inputs[26], _inputs[27], _inputs[28], _inputs[29], _inputs[30], _inputs[31], _inputs[32], _inputs[33], _inputs[34], _inputs[35], _inputs[36], _inputs[37], _inputs[38], _inputs[39], _inputs[40], _inputs[41], _inputs[42], _inputs[43], _inputs[44], _inputs[45], _inputs[46], _inputs[47], _inputs[48], _inputs[49], _inputs[50], _inputs[51], _inputs[52], _inputs[53], _inputs[54], _inputs[55], _inputs[56], _inputs[57], _inputs[58], _inputs[59], _inputs[60], _inputs[61], _inputs[62], _inputs[63], _inputs[64], _inputs[65], _inputs[66], _inputs[67], _inputs[68], _inputs[69], _inputs[70], _inputs[71], _inputs[72], _inputs[73], _inputs[74], _inputs[75], _inputs[76], _inputs[77], _inputs[78], _inputs[79], 27, 1]))
             return true;
         else
             return false;
