@@ -16,11 +16,11 @@ contract NeltenygVerifier {
         Pairing.G2Point delta;
         Pairing.G1Point[] gamma_abc;
     }
-    struct Proof {
-        Pairing.G1Point a;
-        Pairing.G2Point b;
-        Pairing.G1Point c;
-    }
+    // struct Proof {
+    //     Pairing.G1Point a;
+    //     Pairing.G2Point b;
+    //     Pairing.G1Point c;
+    // }
     function verifyingKey() pure internal returns (VerifyingKey memory vk) {
         vk.alpha = Pairing.G1Point(uint256(0x1cef6447db47199c6b365711585827c971bca45a47a05664028dfa32326b657b), uint256(0x1e836779898b91874c2ec469eeadab0332219f0998b0d5515e280a45f7230505));
         vk.beta = Pairing.G2Point([uint256(0x040641c1454d230a33fdb98a7df6da78ce920cc84b390ed2caa331e1e2005a3f), uint256(0x2c10a4e7014d1a16c668c5d4d3742af065f5886fb9b91dd8354a3f4d34753628)], [uint256(0x06e12089894396d771e1d898b4afd2df7a88694b15f8392d4c8d8908776e4413), uint256(0x0653e62e3701ee99ffb5d65fc930b05703e26aa5b8236966bdba3412b99ea221)]);
@@ -32,7 +32,7 @@ contract NeltenygVerifier {
         vk.gamma_abc[2] = Pairing.G1Point(uint256(0x1646d28a40194dcb86c0a3b65bea2cbb3cb31454e07567b18e72c1c5d5f2ad4b), uint256(0x1ce06e33696f72e7be74ab51fd8f82536a95292450a786bbba43861f6983238b));
         vk.gamma_abc[3] = Pairing.G1Point(uint256(0x0020d77906b6639df240c80bd91c5b17dacf87b8e884a461ea8036d00eac41bb), uint256(0x03f94fde1f77a7b0e73c98aeee2698720956df1187bb05b4aae8afc5287ecd85));
     }
-    function verify(uint[] memory input, Proof memory proof) internal view returns (uint) {
+    function verify(uint[] memory input, Pairing.Proof memory proof) internal view returns (uint) {
         uint256 snark_scalar_field = 21888242871839275222246405745257275088548364400416034343698204186575808495617;
         VerifyingKey memory vk = verifyingKey();
         require(input.length + 1 == vk.gamma_abc.length);
@@ -51,7 +51,7 @@ contract NeltenygVerifier {
         return 0;
     }
     function verifyTx(
-            Proof memory proof, uint[3] memory input
+            Pairing.Proof memory proof, uint[3] memory input
         ) public view returns (bool r) {
         uint[] memory inputValues = new uint[](3);
         

@@ -16,11 +16,11 @@ contract GreaterOrEqualThanVerifier {
         Pairing.G2Point delta;
         Pairing.G1Point[] gamma_abc;
     }
-    struct Proof {
-        Pairing.G1Point a;
-        Pairing.G2Point b;
-        Pairing.G1Point c;
-    }
+    // struct Proof {
+    //     Pairing.G1Point a;
+    //     Pairing.G2Point b;
+    //     Pairing.G1Point c;
+    // }
     function verifyingKey() pure internal returns (VerifyingKey memory vk) {
         vk.alpha = Pairing.G1Point(uint256(0x1c610f317c3c696de960854467202c5c9431758d97f55f98394b591d0f5de3a4), uint256(0x0aece9c54af770d8c41a33b23666be1db5db01182218cea78cafbaac07921255));
         vk.beta = Pairing.G2Point([uint256(0x28d73f239361de2948c6bb93c51c8b9ed5ccc42d69e18bdd4948e5ac626ea6b4), uint256(0x26e3d4e50aa96013cc07d05d237dad342e33b6783afa5f33381a94d5db987af9)], [uint256(0x059cabe2816a8dc952fbc0d6049fb4d50f8c8f866c323fdcc10bd0618efde4b4), uint256(0x1dfe99476db79a75a64bba3224d3ac289dc35ee68bcdf2327d9762d034c882c4)]);
@@ -33,7 +33,7 @@ contract GreaterOrEqualThanVerifier {
         vk.gamma_abc[3] = Pairing.G1Point(uint256(0x081214969228b7e58e92feeb6d997253b8ff7db047e0cd645845c660f262d029), uint256(0x2008931d39bfbd34a56addf06eaaa524730e8186756550a785eaac96b28b632b));
         vk.gamma_abc[4] = Pairing.G1Point(uint256(0x09de8a90c43a965330ec2b2fd843dcd28e3377eeeec95317aa669eac8a1aa567), uint256(0x14a6ff7a328e5b99319aead659b3609518b5333952afb29c0a6316eca4310974));
     }
-    function verify(uint[] memory input, Proof memory proof) internal view returns (uint) {
+    function verify(uint[] memory input, Pairing.Proof memory proof) internal view returns (uint) {
         uint256 snark_scalar_field = 21888242871839275222246405745257275088548364400416034343698204186575808495617;
         VerifyingKey memory vk = verifyingKey();
         require(input.length + 1 == vk.gamma_abc.length);
@@ -52,7 +52,7 @@ contract GreaterOrEqualThanVerifier {
         return 0;
     }
     function verifyTx(
-            Proof memory proof, uint[4] memory input
+            Pairing.Proof memory proof, uint[4] memory input
         ) public view returns (bool r) {
         uint[] memory inputValues = new uint[](4);
         

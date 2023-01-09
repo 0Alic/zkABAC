@@ -17,7 +17,7 @@ let callVerifier = ``
 for(let i=0; i<size; i++) {
 
     evaluateCondition += `
-    function evaluateCondition_avgGrade${i}(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) internal view returns (bool) {
+    function evaluateCondition_avgGrade${i}(address _subject, Pairing.Proof memory _proof) internal view returns (bool) {
 
         uint[] memory _inputs = AMContract(${amAddress}).getMetadataOf(_subject, "gradeAverage");
 
@@ -43,6 +43,7 @@ const contract = `
 // SPDX-License-Identifier: MIT
 import "../GreaterOrEqualThanVerifier.sol";
 import "../AM.sol";
+import "../Pairing.sol";
 
 pragma solidity ^0.8.0;
 
@@ -94,7 +95,7 @@ contract ${contractName} {
     ///////////
     // RULES //
     ///////////
-    function evaluateRule_prize_right(address _subject, GreaterOrEqualThanVerifier.Proof[] memory _proofGrade) internal view returns(RuleEvaluation) {
+    function evaluateRule_prize_right(address _subject, Pairing.Proof[] memory _proofGrade) internal view returns(RuleEvaluation) {
 
         if(!evaluateTarget_studentRole(_subject)) {
             return RuleEvaluation.NOTAPPLICABLE;
@@ -119,7 +120,7 @@ contract ${contractName} {
     //////////////
     function evaluate(
         address subject,
-        GreaterOrEqualThanVerifier.Proof[] memory _avgGradeProof
+        Pairing.Proof[] memory _avgGradeProof
     ) public returns(bool) {
 
         // assegnamento a variabili fuori dalla funzione

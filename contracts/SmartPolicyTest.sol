@@ -2,9 +2,13 @@
 import "./NeltenygVerifier.sol";
 import "./GreaterOrEqualThanVerifier.sol";
 import "./AM.sol"; 
+import "./Pairing.sol";
 
 pragma solidity ^0.8.0;
 
+/**
+Contract used for testing the correctness
+ */
 contract XACMLSmartPolicy {
 
     enum RuleEvaluation { DENY, PERMIT, NOTAPPLICABLE, INDETERMINATE }
@@ -15,9 +19,7 @@ contract XACMLSmartPolicy {
     GreaterOrEqualThanVerifier public gradeAvg_verifier;        // Verificatore generale, >= decontestualizzato
     NeltenygVerifier public enrollment_verifier;              // Verificatore dedicato all'anno di iscrizione
 
-    constructor(AMContract _AMcontract,
-                GreaterOrEqualThanVerifier _gradeAvg_verifier,
-                NeltenygVerifier _enrollment_verifier) {
+    constructor(AMContract _AMcontract, GreaterOrEqualThanVerifier _gradeAvg_verifier, NeltenygVerifier _enrollment_verifier) {
 
         require(address(_AMcontract) != address(0) && address(_gradeAvg_verifier) != address(0) &&
                 address(_enrollment_verifier) != address(0), "Input address cannot be 0x0");
@@ -46,7 +48,7 @@ contract XACMLSmartPolicy {
     ////////////////
     // CONDITIONS //
     ////////////////
-    function evaluateCondition_avgGrade(address _subject, GreaterOrEqualThanVerifier.Proof memory _proof) public view returns (bool) {
+    function evaluateCondition_avgGrade(address _subject, Pairing.Proof memory _proof) public view returns (bool) {
 
         uint[] memory _inputs = AM.getMetadataOf(_subject, "gradeAverage");
 
@@ -61,7 +63,7 @@ contract XACMLSmartPolicy {
             return false;
     }
 
-    function evaluateCondition_enrollment(address _subject, NeltenygVerifier.Proof memory _proof) public view returns (bool) {
+    function evaluateCondition_enrollment(address _subject, Pairing.Proof memory _proof) public view returns (bool) {
 
         uint[] memory _inputs = AM.getMetadataOf(_subject, "enrollmentYear");
 
@@ -93,7 +95,7 @@ contract XACMLSmartPolicy {
     ///////////
     // RULES //
     ///////////
-    function evaluateRule_prize_right(address _subject, GreaterOrEqualThanVerifier.Proof memory _proofGrade, NeltenygVerifier.Proof memory _proofEnrollment) public view returns(RuleEvaluation) {
+    function evaluateRule_prize_right(address _subject, Pairing.Proof memory _proofGrade, Pairing.Proof memory _proofEnrollment) public view returns(RuleEvaluation) {
 
         if(!evaluateTarget_studentRole(_subject)) {
             return RuleEvaluation.NOTAPPLICABLE;
@@ -120,8 +122,8 @@ contract XACMLSmartPolicy {
     //////////////
     function evaluate(
         address subject,
-        GreaterOrEqualThanVerifier.Proof memory _avgGradeProof,
-        NeltenygVerifier.Proof memory _enrollmentProof
+        Pairing.Proof memory _avgGradeProof,
+        Pairing.Proof memory _enrollmentProof
     ) public view returns(bool) {
 
         RuleEvaluation prize_right = evaluateRule_prize_right(subject, _avgGradeProof, _enrollmentProof);

@@ -6,7 +6,7 @@ import "../Pairing.sol";
 
 pragma solidity ^0.8.0;
 
-contract XACMLSmartPolicyModular5Verifiers {
+contract XACMLSmartPolicyModular2Verifiers {
 
     enum RuleEvaluation { DENY, PERMIT, NOTAPPLICABLE, INDETERMINATE }
     address public owner;
@@ -58,45 +58,6 @@ contract XACMLSmartPolicyModular5Verifiers {
             return false;
     }
     
-    function evaluateCondition_avgGrade2(address _subject, Pairing.Proof memory _proof) internal view returns (bool) {
-
-        uint[] memory _inputs = AMContract(0x4BBc0cC927e68F0c5C479F434Bc7D65bBDA367d0).getMetadataOf(_subject, "gradeAverage");
-
-        if(_inputs.length != 2)
-            return false;
-
-        if(GreaterOrEqualThanVerifier(0x5787350eEa04e24Dd16BE2fE3fD95b61cA4dd873).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
-            return true;
-        else
-            return false;
-    }
-    
-    function evaluateCondition_avgGrade3(address _subject, Pairing.Proof memory _proof) internal view returns (bool) {
-
-        uint[] memory _inputs = AMContract(0x4BBc0cC927e68F0c5C479F434Bc7D65bBDA367d0).getMetadataOf(_subject, "gradeAverage");
-
-        if(_inputs.length != 2)
-            return false;
-
-        if(GreaterOrEqualThanVerifier(0x5787350eEa04e24Dd16BE2fE3fD95b61cA4dd873).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
-            return true;
-        else
-            return false;
-    }
-    
-    function evaluateCondition_avgGrade4(address _subject, Pairing.Proof memory _proof) internal view returns (bool) {
-
-        uint[] memory _inputs = AMContract(0x4BBc0cC927e68F0c5C479F434Bc7D65bBDA367d0).getMetadataOf(_subject, "gradeAverage");
-
-        if(_inputs.length != 2)
-            return false;
-
-        if(GreaterOrEqualThanVerifier(0x5787350eEa04e24Dd16BE2fE3fD95b61cA4dd873).verifyTx(_proof, [_inputs[0], _inputs[1], 27, 1]))
-            return true;
-        else
-            return false;
-    }
-    
 
 
     ///////////////
@@ -134,18 +95,6 @@ contract XACMLSmartPolicyModular5Verifiers {
         return RuleEvaluation.NOTAPPLICABLE;
     
     result = evaluateCondition_avgGrade1(_subject, _proofGrade[1]);
-    if(!result)
-        return RuleEvaluation.NOTAPPLICABLE;
-    
-    result = evaluateCondition_avgGrade2(_subject, _proofGrade[2]);
-    if(!result)
-        return RuleEvaluation.NOTAPPLICABLE;
-    
-    result = evaluateCondition_avgGrade3(_subject, _proofGrade[3]);
-    if(!result)
-        return RuleEvaluation.NOTAPPLICABLE;
-    
-    result = evaluateCondition_avgGrade4(_subject, _proofGrade[4]);
     if(!result)
         return RuleEvaluation.NOTAPPLICABLE;
     

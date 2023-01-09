@@ -8,13 +8,16 @@ const readline = require('readline')
 // argv[0] = node
 // argv[1] = path
 
-process.argv.splice(0, 2)
+// process.argv.splice(0, 2)
+// const input = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70]
+const input = [1, 2, 5, 10]
 
 let provingKeySize = `num,provingkey,out\n`
+let proofTime = `num,time (ms)\n`
 
-for(let arg in process.argv) {
+for(let arg in input) {
 
-    const size = process.argv[arg]
+    const size = input[arg]
     const zokfile = `./${size}attributes.zok`
     let cmd
 
@@ -76,7 +79,18 @@ for(let arg in process.argv) {
     // Generate proof
     console.log("*** zkABAC script: Generating proof ***")
     cmd = `zokrates generate-proof`
-    console.log(execSync(cmd).toString())
+    let sum = 0
+    const trials = 10
+    for(let i=0; i<trials; i++) {
+        console.log("\tTrial " + i)
+        const start = Date.now()
+        console.log(execSync(cmd).toString())
+        const end = Date.now()
+        console.log((end - start) +  " ms")
+        sum += (end - start) 
+    }
+    proofTime += `${size},${Math.ceil(sum/trials)}\n`
+    console.log(`${proofTime}`)
 
 
     // Verify
@@ -138,3 +152,4 @@ for(let arg in process.argv) {
 }
 
 fs.writeFileSync("./provingkeysize.csv", provingKeySize)
+fs.writeFileSync("./proofTime.csv", proofTime)

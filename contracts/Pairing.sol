@@ -136,4 +136,12 @@ library Pairing {
         p2[3] = d2;
         return pairing(p1, p2);
     }
+
+    
+    struct Proof {
+        Pairing.G1Point a;
+        Pairing.G2Point b;
+        Pairing.G1Point c;
+    }
+
 }

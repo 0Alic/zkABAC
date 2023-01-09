@@ -31,17 +31,20 @@ module.exports = async function (deployer, network, accounts) {
     await am.modifyPublicAttributeOf(subject, roleStr, targetRole, {from: attribute_manager})
     await am.modifyMetadataOf(subject, avgGradeStr, inputs, {from: attribute_manager})
 
-    const sizes = [1,5,10,15,20,25,30,35,40,45,50,55,60,65,70]
+    const sizes = [1,2,5,10,15,20,25,30,35,40,45,50,55,60,65,70]
     let modular_script = ``
     let monolithic_script = ``
 
     for(let i of sizes) {
       modular_script += `node policy_generatorModular.js ${i} ${verifier.address} ${27} ${am.address} '${targetRole}'
       `
-      const mono_verifier_TEMPLATE = artifacts.require(`Verifier${i}`)
-      const mono_verifier = await deployer.deploy(mono_verifier_TEMPLATE)
-      monolithic_script += `node policy_generatorMonolithic.js ${i} ${mono_verifier.address} ${27} ${am.address}  '${targetRole}'
-      `
+      // Skip "2" with monolithic
+      if (i!=2) {
+        const mono_verifier_TEMPLATE = artifacts.require(`Verifier${i}`)
+        const mono_verifier = await deployer.deploy(mono_verifier_TEMPLATE)
+        monolithic_script += `node policy_generatorMonolithic.js ${i} ${mono_verifier.address} ${27} ${am.address}  '${targetRole}'
+        `  
+      }
     }
 
     fs.writeFileSync(`./test_scripts/generateModularPolicies.sh`, modular_script)

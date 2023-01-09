@@ -6,6 +6,8 @@ import "./GreaterOrEqualThanVerifier.sol";
 
 import "./NeltenygVerifier.sol";
 
+import "./Pairing.sol";
+
 
 contract TranslatedXACMLSmartPolicy {
 
@@ -36,7 +38,7 @@ contract TranslatedXACMLSmartPolicy {
     // CONDITIONS //
     ////////////////
     
-                function evaluateCondition_prize_gradeAverage(address _subject, GreaterOrEqualThanVerifier.Proof memory _proofgradeAverage) public view returns (bool) {
+                function evaluateCondition_prize_gradeAverage(address _subject, Pairing.Proof memory _proofgradeAverage) public view returns (bool) {
 
                 uint[] memory _inputs = AMContract(0xd9145CCE52D386f254917e481eB44e9943F39138).getMetadataOf(_subject, "gradeAverage");
 
@@ -49,7 +51,7 @@ contract TranslatedXACMLSmartPolicy {
                     return false;
                 }
             
-                function evaluateCondition_prize_enrollmentYear(address _subject, NeltenygVerifier.Proof memory _proofenrollmentYear) public view returns (bool) {
+                function evaluateCondition_prize_enrollmentYear(address _subject, Pairing.Proof memory _proofenrollmentYear) public view returns (bool) {
 
                 uint[] memory _inputs = AMContract(0xd9145CCE52D386f254917e481eB44e9943F39138).getMetadataOf(_subject, "enrollmentYear");
 
@@ -85,7 +87,7 @@ contract TranslatedXACMLSmartPolicy {
     // RULES //
     ///////////
     
-    function evaluateRule_prize(address _subject , GreaterOrEqualThanVerifier.Proof memory _proofgradeAverage, NeltenygVerifier.Proof memory _proofenrollmentYear) public view returns(RuleEvaluation) {
+    function evaluateRule_prize(address _subject , Pairing.Proof memory _proofgradeAverage, Pairing.Proof memory _proofenrollmentYear) public view returns(RuleEvaluation) {
 
         
         if(!evaluateTarget_prize(_subject)) {
@@ -100,7 +102,7 @@ contract TranslatedXACMLSmartPolicy {
     }
 
     
-    function evaluateRule_denyRule(address _subject ) public view returns(RuleEvaluation) {
+    function evaluateRule_denyRule(address _subject ) public pure returns(RuleEvaluation) {
 
         
         
@@ -113,7 +115,7 @@ contract TranslatedXACMLSmartPolicy {
     // EVALUATE //
     //////////////
     
-function evaluate(address subject , GreaterOrEqualThanVerifier.Proof memory _proofgradeAverage, NeltenygVerifier.Proof memory _proofenrollmentYear) public view returns(bool) {
+function evaluate(address subject , Pairing.Proof memory _proofgradeAverage, Pairing.Proof memory _proofenrollmentYear) public returns(bool) {
     
     return combining_algorithm( [evaluateRule_prize(subject , _proofgradeAverage, _proofenrollmentYear), evaluateRule_denyRule(subject )] );
 }

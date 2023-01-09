@@ -5,7 +5,7 @@ const fs = require('fs')
 
 module.exports = async function(callback) {
 
-    const gas_limit = 1000000000
+    const gas_limit = 200000000
 
     let accounts = await web3.eth.getAccounts()
     let attribute_manager = accounts[0]
@@ -21,7 +21,7 @@ module.exports = async function(callback) {
     const targetRole = "bachelor student"
 
 
-    const sizes = [1,5,10,15,20,25,30,35,40,45,50,55,60,65,70]
+    const sizes = [1,2,5,10,15,20,25,30,35,40,45,50,55,60,65,70]
 
 
     let deploycost = ``
@@ -45,9 +45,11 @@ module.exports = async function(callback) {
 
         proofs =  Array(s).fill([json.proof.a, json.proof.b, json.proof.c])
 
+        console.log(`Deploying...`)
         gas = await policyArtifact.new.estimateGas({from: resource_owner})
         smart_policy = await policyArtifact.new({from: resource_owner})
 
+        console.log(`Evaluating...`)
         tx = await smart_policy.evaluate(subject, proofs, {gas: gas_limit})
     
         console.log("\tDeployment cost: " + gas)

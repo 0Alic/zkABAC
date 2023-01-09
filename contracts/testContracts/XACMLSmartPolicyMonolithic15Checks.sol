@@ -21,7 +21,7 @@ contract XACMLSmartPolicyMonolithic15Checks {
     /////////////
     function evaluateTarget_studentRole(address _subject) public view returns (bool) {
 
-        string memory _role = AMContract(0x45ce12837e04e7c0FA10a873A8654946a63bB377).getPublicAttributeOf(_subject, "uniStudent");
+        string memory _role = AMContract(0x4BBc0cC927e68F0c5C479F434Bc7D65bBDA367d0).getPublicAttributeOf(_subject, "uniStudent");
 
         if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked("bachelor student")))
             return true;
@@ -35,12 +35,12 @@ contract XACMLSmartPolicyMonolithic15Checks {
     ////////////////
     function evaluateCondition(address _subject, Verifier15.Proof memory _proof) public view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x45ce12837e04e7c0FA10a873A8654946a63bB377).getMetadataOf(_subject, "Verifier15");
+        uint[] memory _inputs = AMContract(0x4BBc0cC927e68F0c5C479F434Bc7D65bBDA367d0).getMetadataOf(_subject, "Verifier15");
 
         if(_inputs.length != 30)
             return false;
 
-        if(Verifier15(0x5b6bfD9FAB20272Ed7d3D0efdcAE56475146e3f5).verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], _inputs[10], _inputs[11], _inputs[12], _inputs[13], _inputs[14], _inputs[15], _inputs[16], _inputs[17], _inputs[18], _inputs[19], _inputs[20], _inputs[21], _inputs[22], _inputs[23], _inputs[24], _inputs[25], _inputs[26], _inputs[27], _inputs[28], _inputs[29], 27, 1]))
+        if(Verifier15(0xDFFD64c691ac88673C33bBae7748480Cf55eb1E5).verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], _inputs[10], _inputs[11], _inputs[12], _inputs[13], _inputs[14], _inputs[15], _inputs[16], _inputs[17], _inputs[18], _inputs[19], _inputs[20], _inputs[21], _inputs[22], _inputs[23], _inputs[24], _inputs[25], _inputs[26], _inputs[27], _inputs[28], _inputs[29], 27, 1]))
             return true;
         else
             return false;

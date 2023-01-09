@@ -21,7 +21,7 @@ contract XACMLSmartPolicyMonolithic5Checks {
     /////////////
     function evaluateTarget_studentRole(address _subject) public view returns (bool) {
 
-        string memory _role = AMContract(0x45ce12837e04e7c0FA10a873A8654946a63bB377).getPublicAttributeOf(_subject, "uniStudent");
+        string memory _role = AMContract(0x4BBc0cC927e68F0c5C479F434Bc7D65bBDA367d0).getPublicAttributeOf(_subject, "uniStudent");
 
         if(keccak256(abi.encodePacked(_role)) == keccak256(abi.encodePacked("bachelor student")))
             return true;
@@ -35,12 +35,12 @@ contract XACMLSmartPolicyMonolithic5Checks {
     ////////////////
     function evaluateCondition(address _subject, Verifier5.Proof memory _proof) public view returns (bool) {
 
-        uint[] memory _inputs = AMContract(0x45ce12837e04e7c0FA10a873A8654946a63bB377).getMetadataOf(_subject, "Verifier5");
+        uint[] memory _inputs = AMContract(0x4BBc0cC927e68F0c5C479F434Bc7D65bBDA367d0).getMetadataOf(_subject, "Verifier5");
 
         if(_inputs.length != 10)
             return false;
 
-        if(Verifier5(0x2130c40ECCeF70DfA76645436c04dbA54dCeabad).verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], 27, 1]))
+        if(Verifier5(0xd5389ad2342E3eD0d5a21071bB56D1b151271E45).verifyTx(_proof, [_inputs[0], _inputs[1], _inputs[2], _inputs[3], _inputs[4], _inputs[5], _inputs[6], _inputs[7], _inputs[8], _inputs[9], 27, 1]))
             return true;
         else
             return false;
